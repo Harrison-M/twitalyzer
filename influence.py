@@ -63,7 +63,14 @@ else:
             else:
                 continue
         userinfluence = 0
-        testuser = api.users.show(user_id=uid)
+        testuser = None
+        try:
+            testuser = api.users.show(user_id=uid)
+        except TwitterError as e:
+            print e
+            print "Last UID: " + str(uid)
+            print "Last influence: " + str(influencecount)
+            quit()
         if(testuser["protected"]):
             continue
         uname = testuser["screen_name"]
